@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/app
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build:
+      context: ./gestion-de-parc
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    volumes:
+      - ./gestion-de-parc:/usr/src/app
+    environment:
+      - NODE_ENV=production
