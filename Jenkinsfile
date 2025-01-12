@@ -5,7 +5,7 @@ pipeline {
         // Variables d'environnement pour le frontend et le backend
         FRONTEND_DIR = 'gestion-de-parc'
         BACKEND_DIR = 'server'
-        NODE_VERSION = '16' // Version de Node.js
+        NODE_VERSION = '20' // Version de Node.js
     }
 
     stages {
