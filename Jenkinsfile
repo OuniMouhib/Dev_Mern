@@ -5,8 +5,8 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        IMAGE_NAME_SERVER = 'OuniMouhib/dev_mern-frontend'
-        IMAGE_NAME_CLIENT = 'OuniMouhib/dev_mern-backend'
+        IMAGE_NAME_SERVER = 'OuniMouhib/dev_mern-backend'
+        IMAGE_NAME_CLIENT = 'OuniMouhib/dev_mern-frontend'
     }
     stages {
         stage('Checkout') {
