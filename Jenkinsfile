@@ -23,11 +23,13 @@ pipeline {
                 echo 'Installation des dépendances pour le frontend...'
                 dir(FRONTEND_DIR) {
                     sh 'npm install'
+                    sh 'npm list' // Affiche les dépendances installées pour vérification
                 }
 
                 echo 'Installation des dépendances pour le backend...'
                 dir(BACKEND_DIR) {
                     sh 'npm install'
+                    sh 'npm list' // Affiche les dépendances installées pour vérification
                 }
             }
         }
@@ -63,6 +65,8 @@ pipeline {
                 echo 'Déploiement du backend...'
                 dir(BACKEND_DIR) {
                     sh 'npm start &' // Démarre le serveur en arrière-plan
+                    sh 'sleep 10' // Attend que le serveur démarre
+                    sh 'curl -I http://localhost:3000' // Vérifie que le serveur fonctionne
                 }
             }
         }
@@ -73,6 +77,8 @@ pipeline {
                 echo 'Déploiement du frontend...'
                 dir(FRONTEND_DIR) {
                     sh 'npm start &' // Démarre l'application React en arrière-plan
+                    sh 'sleep 10' // Attend que l'application démarre
+                    sh 'curl -I http://localhost:3001' // Vérifie que l'application fonctionne
                 }
             }
         }
