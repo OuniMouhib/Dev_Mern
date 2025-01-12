@@ -1,75 +1,72 @@
 pipeline {
     agent any
-
-    environment {
-        FRONTEND_DIR = 'gestion-de-parc'
-        BACKEND_DIR = 'server'
-        NODE_VERSION = '20'
+    triggers {
+        pollSCM('H/5 * * * *')
     }
-
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        IMAGE_NAME_SERVER = 'OuniMouhib/dev_mern-frontend'
+        IMAGE_NAME_CLIENT = 'OuniMouhib/dev_mern-backend'
+    }
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clonage du dépôt Git...'
-                git branch: 'main', url: 'https://github.com/OuniMouhib/Dev_Mern.git'
+                git branch: 'main',
+                    url: 'https://github.com/OuniMouhib/dev_mern.git',
+                    credentialsId: 'Github_ssh'
             }
         }
-
-        stage('Install Dependencies') {
+        stage('Build Server Image') {
             steps {
-                echo 'Installation des dépendances...'
-                dir(FRONTEND_DIR) {
-                    sh 'npm install'
-                }
-                dir(BACKEND_DIR) {
-                    sh 'npm install'
+                dir('backend') {
+                    script {
+                        dockerImageServer = docker.build("${IMAGE_NAME_SERVER}")
+                    }
                 }
             }
         }
-
-        stage('Lint and Build Frontend') {
+        stage('Build Client Image') {
             steps {
-                echo 'Lint et construction du frontend...'
-                dir(FRONTEND_DIR) {
-                    sh '''
-                        npm run lint
-                        npm run build
-                    '''
+                dir('frontend') {
+                    script {
+                        dockerImageClient = docker.build("${IMAGE_NAME_CLIENT}")
+                    }
                 }
             }
         }
-
-        stage('Build and Start Services') {
+        stage('Scan Server Image') {
             steps {
-                echo 'Construction et démarrage des services Docker...'
-                sh '''
-                    docker-compose build
-                    docker-compose up -d
-                '''
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                    aquasec/trivy:latest image --exit-code 0 \
+                    --severity LOW,MEDIUM,HIGH,CRITICAL \
+                    ${IMAGE_NAME_SERVER}
+                    """
+                }
             }
         }
-
-        stage('Verify Services') {
+        stage('Scan Client Image') {
             steps {
-                echo 'Vérification des services...'
-                sh '''
-                    curl -I http://localhost:5000 || (echo "Le backend n'a pas démarré." && exit 1)
-                    curl -I http://localhost:3000 || (echo "Le frontend n'a pas démarré." && exit 1)
-                '''
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                    aquasec/trivy:latest image --exit-code 0 \
+                    --severity LOW,MEDIUM,HIGH,CRITICAL \
+                    ${IMAGE_NAME_CLIENT}
+                    """
+                }
             }
         }
-    }
-
-    post {
-        success {
-            echo 'Pipeline exécuté avec succès !'
-        }
-        failure {
-            echo 'Le pipeline a échoué.'
-            sh 'docker-compose logs'
-        }
-        always {
-            sh 'docker-compose down'
+        stage('Push Images to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('', "${DOCKERHUB_CREDENTIALS}") {
+                        dockerImageServer.push()
+                        dockerImageClient.push()
+                    }
+                }
+            }
         }
     }
 }
