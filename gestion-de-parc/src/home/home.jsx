@@ -29,7 +29,7 @@ function Home() {
                 <div className="company-description">
                     <h2>Description</h2>
                     <p>
-                        Le but de ce projet est de développer un système de gestion du parc de véhicules pour optimiser l'utilisation des ressources et améliorer l&apos;efficacité opérationnelle. Contexte : L'entreprise dispose dun parc de véhicules utilisés pour des missions variées. Actuellement, la gestion de ces véhicules est effectuée de manière manuelle, ce qui entraîne des inefficacités et des erreurs.
+                        Le but de ce projet est de développer un système de gestion du parc de véhicules pour optimiser lutilisation des ressources et améliorer lefficacité opérationnelle. Contexte : Lentreprise dispose dun parc de véhicules utilisés pour des missions variées. Actuellement, la gestion de ces véhicules est effectuée de manière manuelle, ce qui entraîne des inefficacités et des erreurs.
                     </p>
                 </div>
             </div>

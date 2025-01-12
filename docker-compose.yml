@@ -6,10 +6,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    volumes:
-      - ./server:/usr/src/app
     environment:
       - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/crud  # Utilisation du nom de service mongo
+    depends_on:
+      - mongo
 
   frontend:
     build:
@@ -17,7 +18,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:80"
-    volumes:
-      - ./gestion-de-parc:/usr/src/app
     environment:
       - NODE_ENV=production
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

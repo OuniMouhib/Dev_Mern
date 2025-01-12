@@ -12,7 +12,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-mongoose.connect("mongodb://127.0.0.1:27017/crud");
+mongoose.connect("mongodb://mongo:27017/crud").then(() => console.log("Connexion à MongoDB réussie"))
+    .catch(err => console.error("Erreur de connexion à MongoDB :", err));;
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     EmployeeModel.findOne({ email: email })
