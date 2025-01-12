@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   backend:
     build:
@@ -10,16 +11,21 @@ services:
       - NODE_ENV=development
       - MONGO_URI=mongodb://mongo:27017/crud  # Utilisation du nom de service mongo
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
+    networks:
+      - app-network
 
   frontend:
     build:
       context: ./gestion-de-parc
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "3000:3000"  # Exposer le port 3000 pour le développement
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development  # Mode développement pour React
+    networks:
+      - app-network
 
   mongo:
     image: mongo:latest
@@ -27,6 +33,17 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017 --quiet
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - app-network
 
 volumes:
   mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
