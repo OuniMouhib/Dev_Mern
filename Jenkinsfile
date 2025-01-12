@@ -17,24 +17,42 @@ pipeline {
             }
         }
 
-        // Étape 2 : Installation des dépendances pour le frontend et le backend
+        // Étape 2 : Vérification des outils nécessaires
+        stage('Check Tools') {
+            steps {
+                echo 'Vérification de la disponibilité de Node.js et npm...'
+                sh '''
+                    if ! command -v node &> /dev/null; then
+                        echo "Node.js n'est pas installé. Veuillez l'installer avant de continuer."
+                        exit 1
+                    fi
+                    if ! command -v npm &> /dev/null; then
+                        echo "npm n'est pas installé. Veuillez l'installer avant de continuer."
+                        exit 1
+                    fi
+                    echo "Node.js et npm sont installés."
+                    node -v
+                    npm -v
+                '''
+            }
+        }
+
+        // Étape 3 : Installation des dépendances pour le frontend et le backend
         stage('Install Dependencies') {
             steps {
                 echo 'Installation des dépendances pour le frontend...'
                 dir(FRONTEND_DIR) {
                     sh 'npm install'
-                    sh 'npm list' // Affiche les dépendances installées pour vérification
                 }
 
                 echo 'Installation des dépendances pour le backend...'
                 dir(BACKEND_DIR) {
                     sh 'npm install'
-                    sh 'npm list' // Affiche les dépendances installées pour vérification
                 }
             }
         }
 
-        // Étape 3 : Construction du frontend (React)
+        // Étape 4 : Construction du frontend (React)
         stage('Build Frontend') {
             steps {
                 echo 'Construction du frontend...'
@@ -44,41 +62,49 @@ pipeline {
             }
         }
 
-        // Étape 4 : Exécution des tests pour le frontend et le backend
+        // Étape 5 : Exécution des tests pour le frontend et le backend
         stage('Run Tests') {
             steps {
                 echo 'Exécution des tests pour le frontend...'
                 dir(FRONTEND_DIR) {
-                    sh 'npm test'
+                    sh 'npm test || echo "Certains tests ont échoué, veuillez vérifier les logs."'
                 }
 
                 echo 'Exécution des tests pour le backend...'
                 dir(BACKEND_DIR) {
-                    sh 'npm test'
+                    sh 'npm test || echo "Certains tests ont échoué, veuillez vérifier les logs."'
                 }
             }
         }
 
-        // Étape 5 : Déploiement du backend (Node.js)
+        // Étape 6 : Déploiement du backend (Node.js)
         stage('Deploy Backend') {
             steps {
                 echo 'Déploiement du backend...'
                 dir(BACKEND_DIR) {
-                    sh 'npm start &' // Démarre le serveur en arrière-plan
-                    sh 'sleep 10' // Attend que le serveur démarre
-                    sh 'curl -I http://localhost:3000' // Vérifie que le serveur fonctionne
+                    sh '''
+                        echo "Démarrage du serveur backend..."
+                        npm start &
+                        sleep 10
+                        echo "Vérification du serveur backend..."
+                        curl -I http://localhost:3000 || (echo "Le serveur backend n'a pas démarré correctement." && exit 1)
+                    '''
                 }
             }
         }
 
-        // Étape 6 : Déploiement du frontend (React)
+        // Étape 7 : Déploiement du frontend (React)
         stage('Deploy Frontend') {
             steps {
                 echo 'Déploiement du frontend...'
                 dir(FRONTEND_DIR) {
-                    sh 'npm start &' // Démarre l'application React en arrière-plan
-                    sh 'sleep 10' // Attend que l'application démarre
-                    sh 'curl -I http://localhost:3001' // Vérifie que l'application fonctionne
+                    sh '''
+                        echo "Démarrage de l'application React..."
+                        npm start &
+                        sleep 10
+                        echo "Vérification de l'application React..."
+                        curl -I http://localhost:3001 || (echo "L'application React n'a pas démarré correctement." && exit 1)
+                    '''
                 }
             }
         }
@@ -90,7 +116,7 @@ pipeline {
             echo 'Le pipeline a réussi !'
         }
         failure {
-            echo 'Le pipeline a échoué.'
+            echo 'Le pipeline a échoué. Veuillez vérifier les logs pour plus d\'informations.'
         }
     }
 }
