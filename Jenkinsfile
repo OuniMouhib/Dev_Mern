@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Clonage du dépôt Git...'
-                git branch: 'main', url: 'https://github.com/votre_utilisateur/votre_repo.git'
+                git branch: 'main', url: 'https://github.com/OuniMouhib/Dev_Mern.git'
             }
         }
 
