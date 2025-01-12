@@ -1,0 +1,11 @@
+.entretien-container {
+    background-image: url('entretien.jpg');
+    /* Remplacez 'chemin/vers/votre/image.jpg' par le chemin de votre image */
+    background-repeat: repeat; /* Répétez l'image de fond sur toute la page */
+    min-height: 100vh; /* Assurez-vous que la hauteur de l'image est au moins égale à la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Ajoutez d'autres styles CSS au besoin */

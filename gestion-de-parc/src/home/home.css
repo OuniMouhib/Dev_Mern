@@ -1,0 +1,113 @@
+/* Style de la barre de navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    background-color: #7dabf6;
+    /* Couleur de fond */
+    color: #fff;
+    /* Couleur du texte */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Ombre légère */
+}
+
+.navbar-title {
+    font-size: 26px;
+    /* Taille de la police du titre */
+    font-weight: bold;
+    color: #0348a3;
+    /* Couleur du texte */
+    text-transform: uppercase;
+    /* Mise en majuscules */
+    letter-spacing: 6px;
+    /* Espacement entre les lettres */
+    margin: 0;
+    /* Suppression de la marge pour un meilleur alignement */
+    padding: 0;
+    /* Suppression du padding pour un meilleur alignement */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    margin: 0 10px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary {
+    background-color: #1c726b;
+    /* Rouge */
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #83d3e1;
+    /* Rouge clair au survol */
+}
+
+.btn-secondary {
+    background-color: #7dabf6;
+    /* Bleu */
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #0697ae;
+    /* Bleu clair au survol */
+}
+
+.company-description {
+    text-align: center;
+    /* Centrez le contenu horizontalement */
+    color: rgb(58, 90, 117);
+    /* Couleur du texte */
+    max-width: 800px;
+    /* Largeur maximale du contenu */
+    margin: 0px auto;
+    /* Centrez horizontalement le conteneur */
+    padding: 20px;
+    /* Ajoutez de l'espace autour du contenu */
+    position: relative;
+    /* Position relative pour positionner le contenu par rapport à l'image de fond */
+    z-index: 1;
+    /* Assurez-vous que le contenu est au-dessus de l'image de fond */
+}
+
+.company-description h2 {
+    font-size: 48px;
+    /* Taille maximale de la police pour le titre */
+    margin-bottom: 20px;
+    /* Marge en bas du titre */
+    color: #e491e1;
+}
+
+.company-description p {
+    font-size: 24px;
+    /* Taille maximale de la police pour la description */
+    line-height: 1.5;
+    /* Espacement des lignes pour une meilleure lisibilité */
+}
+
+.mouh {
+    margin: 0px;
+    padding: 0px;
+    background-image: url('bmw2.jpg');
+    background-size: cover;
+    /* Couvrir toute la zone disponible */
+    background-repeat: no-repeat;
+    /* Ne pas répéter l'image */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

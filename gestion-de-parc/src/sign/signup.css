@@ -1,0 +1,137 @@
+.mo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('car1.jpg');
+    /* Répétez l'image de fond sur toute la page */
+    min-height: 100vh;
+    /* Assurez-vous que la hauteur de l'image est au moins égale à la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Supprimez les espaces de remplissage par défaut pour assurer le plein écran */
+
+/* Style de la barre de navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #a6c5e7;
+    /* Couleur de fond */
+    color: #fff;
+    /* Couleur du texte */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteneur principal */
+.container {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligner le contenu à droite */
+    max-width: 300px;
+    /* Définir la largeur maximale du contenu */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Assurer que le padding est inclus dans la largeur */
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Déplacer la couleur de fond du formulaire ici pour éviter les fuites de couleur */
+    border-radius: 10px;
+    /* Déplacer la bordure arrondie ici pour une cohérence */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Déplacer l'ombre ici pour une cohérence */
+}
+
+.form-container {
+    /* Supprimez la couleur de fond et les styles de bordure ici */
+    padding: 20px;
+    /* Conservez le reste des styles */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    /* Ajoutez une épaisseur de police pour mettre en évidence */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    /* Ajoutez une transition pour une interaction fluide */
+}
+
+.form-group input:focus {
+    outline: none;
+    /* Supprimez la bordure d'accentuation sur le focus */
+    border-color: #007bff;
+    /* Changez la couleur de la bordure lorsqu'il est en focus */
+}
+
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* Ajoutez une transition pour une interaction fluide */
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+    /* Changez la couleur de fond lorsqu'il est survolé */
+}
+
+.form-group p {
+    text-align: center;
+}
+
+.form-group p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-group p a:hover {
+    text-decoration: underline;
+}
+
+.login {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style lorsque le bouton est survolé */
+.login:hover {
+    background-color: #007bff;
+    /* Couleur de fond au survol */
+    color: #fff;
+    /* Couleur du texte au survol */
+}
+
+/* Style lorsque le bouton est désactivé */
+.login:disabled {
+    opacity: 0.5;
+    /* Réduire l'opacité */
+    cursor: not-allowed;
+    /* Curseur indisponible */
+}
