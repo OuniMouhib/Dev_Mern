@@ -13,3 +13,4 @@ env:
     value: "5000"
 ingress:
   enabled: false
+  replicaCount : 5
