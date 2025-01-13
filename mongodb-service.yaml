@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service  # Add a name for the Service
+  namespace: default     # Optional: Specify the namespace (default is used if omitted)
+spec:
+  selector:
+    app: mongodb         # Match the labels of your MongoDB pods
+  ports:
+    - protocol: TCP
+      port: 27017        # Port exposed by the Service
+      targetPort: 27017  # Port on the container (must match the containerPort in the Deployment)
+  type: ClusterIP        # Service type (ClusterIP is default)

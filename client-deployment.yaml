@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend-1 # Synchronisé avec le nom du conteneur
+          image: mouhib25/dev_mern-frontend # Synchronisé avec l'image
+          ports:
+            - containerPort: 3000 # Synchronisé avec le port
+          envFrom:
+            - configMapRef:
+                name: app-configmap
